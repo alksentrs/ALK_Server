@@ -1,19 +1,23 @@
 package com.alksentrs.test.server;
 
-import com.alksentrs.network.ConnectionObserver;
+import com.alksentrs.network.SingleThreadConnectionObserver;
 
 import java.net.Socket;
 
-public class MyApplication extends ConnectionObserver {
+public class MyApplication extends SingleThreadConnectionObserver {
 
     @Override
     protected void updateRequest(Socket socket, byte[] request) {
 
-
         String message = new String(request, 0, request.length);
         System.out.println(message);
-        sendData(socket,"response");
+        sendData(socket,"response("+message+")");
         broadcastData("broadcast");
+    }
+
+    @Override
+    protected byte[] getAck() {
+        return new byte[0];
     }
 
 }

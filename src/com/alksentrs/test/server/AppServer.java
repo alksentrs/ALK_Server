@@ -7,11 +7,14 @@ public class AppServer {
     public static void main(String[] args) {
 
         TCPServer tcpServer = new TCPServer(1234);
-
         MyApplication myApplication = new MyApplication();
 
         tcpServer.attachConnectionObserver(myApplication);
-        tcpServer.run();
+        Thread threadConnection = new Thread(tcpServer);
+        Thread threadReceiver = new Thread(myApplication);
+
+        threadConnection.start();
+        threadReceiver.start();
     }
 
 }

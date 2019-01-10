@@ -52,6 +52,8 @@ public class TCPClient {
     }
 
     public void close() throws IOException {
+        if (null!=bis) bis.close();
+        if (null!=bos) bos.close();
         if ((null!=socket)&&(!socket.isClosed())) socket.close();
     }
 }
